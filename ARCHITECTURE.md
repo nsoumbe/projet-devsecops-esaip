@@ -1,0 +1,1 @@
+- Utilisateur -> APP1 (Frontend) : Port 8080 (Point d'entrée). - APP1 -> APP2 (Backend) : Port 5000 (API REST). - APP2 -> DB (Database) : Port 5432 (Stockage).
