@@ -30,3 +30,25 @@ jobs:
           context: ./app-frontend
           push: true
           tags: nsoumbe/app-frontend:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push # Attend que le build soit fini avant de déployer
+    steps:
+      - name: Déploiement via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/master/projet-devsecops-esaip
+            git pull origin main
+            
+            # On applique les fichiers (dans le namespace default puisque c'est là qu'ils sont)
+            kubectl apply -f backend.yaml -n default
+            kubectl apply -f frontend.yaml -n default
+            
+            # On relance les services avec les noms validés
+            kubectl rollout restart deployment/backend -n default
+            kubectl rollout restart deployment/frontend -n default

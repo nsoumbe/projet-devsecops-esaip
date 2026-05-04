@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: app-frontend:v1
+        image: nsoumbe/app-frontend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
 ---

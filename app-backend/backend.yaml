@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: app-backend:v1
-        imagePullPolicy: IfNotPresent # Ajout crucial
+        image: nsoumbe/app-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:
